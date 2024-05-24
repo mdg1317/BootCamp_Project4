@@ -102,8 +102,9 @@ function update_pokemon_image(selected_name, container_id) {
   console.log(`${container_id}:  ${image_url}`)
 
   // Update the src attribute of the image element
-  d3.select(container_id).attr('src', image_url);
-  // document.getElementById(container_id).src(image_url);
+  // d3.select(container_id).attr('src', image_url);
+  const hero = document.getElementById(container_id)
+  hero.src = image_url
 }
 
 

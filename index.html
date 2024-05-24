@@ -17,59 +17,60 @@
 
 <body>
   <div class="container-fluid" id="main_container">
-    <div class="row" id = "header">
+    <div class="row" id="header">
       <div class="col-12">
         <p>header</p>
       </div>
     </div>
-  <div class="row" id="body">
+    <div class="row" id="body">
 
-    <!-- Player 1 Column -->
-    <div class="col-md-4 challenger_container">
-      <div class= "row pulldown_container">
-        <h6>Player 1 Pokemon:</h6>
-        <select id="pokemon_list" class="pulldown" onchange="optionChanged(this.value)"></select>
+      <!-- Player 1 Column -->
+      <div class="col-md-4 challenger_container">
+        <div class="row pulldown_container">
+          <h6>Player 1 Pokemon:</h6>
+          <select id="pokemon1_dropdown" class="pulldown"></select>
+        </div>
+
+        <div class="row hero_container">
+          <img id="p1_hero_image" class="hero_image" src="static\images\placeholder.png">
+        </div>
+
+        <div class="row hero_stats_container">
+          <div class="pokemon_stats" id="p1_stats">
+            Pokemon Stats
+          </div>
+        </div>
+
       </div>
 
-      <div class= "row hero_container">
-        <img class="hero_image" src ="static\images\placeholder.png">
+      <!-- Center Column -->
+      <div class="col-md-4 battle_container">result</div>
+
+      <!-- Player 2 Column -->
+      <div class="col-md-4 challenger_container">
+        <div class="row pulldown_container">
+          <h6>Player 2 Pokemon:</h6>
+          <select id="pokemon2_dropdown" class="pulldown"></select>
+        </div>
+
+        <div class="row hero_container">
+          <img class="hero_image" id="p2_hero_image"  src="static\images\placeholder.png">
+        </div>
+
+        <div class="row hero_stats_container">
+          <div class="pokemon_stats" id="p2_stats">
+            Pokemon Stats
+          </div>
+        </div>
+
       </div>
 
-      <div class= "row hero_stats_container">
-        <div class = "pokemon_stats" id="p1_stats">
-          Pokemon Stats
-        </div>        
-      </div>
-      
     </div>
-    
-    <!-- Center Column -->
-    <div class="col-md-4 battle_container">result</div>
-
-    <!-- Player 2 Column -->
-    <div class="col-md-4 challenger_container">
-      <div class= "row pulldown_container">
-        <h6>Player 2 Pokemon:</h6>
-        <select id="pokemon_list" class="pulldown" onchange="optionChanged(this.value)"></select>
-      </div>
-
-      <div class= "row hero_container">
-        <img class="hero_image" src ="static\images\placeholder.png">
-      </div>
-
-      <div class= "row hero_stats_container">
-        <div class = "pokemon_stats" id="p2_stats">
-          Pokemon Stats
-        </div>        
-      </div>
-
   </div>
 
-
-
-
-  <!-- Our JavaScript -->
-  <script type="text/javascript" src="static/js/index.js"></script>
+  <!-- JavaScript -->
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script type="text/javascript" src="static/js/battle.js"></script>
 </body>
 
 </html>

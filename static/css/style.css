@@ -61,8 +61,35 @@ body {
     margin: 15px auto;
     border-radius: 20px;
     padding: 10px;
+}
+
+.pokemon_stats h4{
+    font-size: 1.8rem;
+    font-variant: small-caps;
+    margin-bottom: 0px;
 
 }
+
+.legendary_label {
+    font-variant: small-caps;
+    font-size: 1rem;
+    font-weight: 400;
+    color: rgb(97, 97, 97);
+
+}
+
+.pokemon_stats ul{
+    padding-left: 1em;
+
+}
+
+.pokemon_stats li {
+    list-style: none;
+}
+
+.pokemon_stats li strong {    
+}
+
 
 
 

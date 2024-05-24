@@ -109,7 +109,5 @@ function update_pokemon_image(selected_name, container_id) {
 
 
 
-
-
 // Call the function to fetch and populate the dropdown when the page loads
 document.addEventListener('DOMContentLoaded', load_pokemon);

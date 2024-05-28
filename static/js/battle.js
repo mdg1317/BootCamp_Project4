@@ -1,7 +1,7 @@
 // console.log("connected");
 
 // File Paths & variables
-const pokemon_csv = "Resources/pokemon.csv";
+const pokemon_csv = "static/data/pokemon.csv";
 let pokemon_data = [];
 
 // Parse the CSV
@@ -16,7 +16,7 @@ function load_pokemon() {
 
 // Populate dropdowns
 function populate_dropdown(pokemon_names, dropdown_id, change_handler) {
-  // Sort the names alphabetically
+  // Sort the names alphabetically 
   pokemon_names.sort();
 
   // Selects the dropdown element
@@ -94,20 +94,75 @@ function update_pokemon2_stats(selected_name) {
 }
 
 
-// Function to update the picture of the selected Pokémon
+// Updates the selected Pokémon picture
 function update_pokemon_image(selected_name, container_id) {
-  // Construct the URL of the image based on the selected Pokémon's name
   const image_url = `static\\images\\${selected_name.toLowerCase()}.png`;
-
-  console.log(`${container_id}:  ${image_url}`)
-
-  // Update the src attribute of the image element
-  // d3.select(container_id).attr('src', image_url);
   const hero = document.getElementById(container_id)
   hero.src = image_url
 }
 
 
+// ################################################################################
+
+// Predict Winner Button
+function predict_winner() {
+  const p1_pokemon = d3.select('#pokemon1_dropdown').property('value');
+  const p2_pokemon = d3.select('#pokemon2_dropdown').property('value');
+
+  const prediction_text = `Player 1: ${p1_pokemon}, Player 2: ${p2_pokemon}`;
+  // d3.select('#predicted_winner').text(prediction_text);
+
+
+
+  fetch('/predict_winner', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ player1: p1_pokemon, player2: p2_pokemon })
+  })
+  .then(response => {
+    if (response.ok) {
+      return response.json(); // Process the JSON response
+    } else {
+      console.error("Error connecting to Flask app");
+    }
+  })
+  .then(data => {
+    // Log the result to the console
+    post_prediction(p1_pokemon, p2_pokemon, data.result)
+    // console.log(`Predicted Winner: ${data.result}`);
+  })
+  .catch(error => console.error("Error:", error));
+}
+
+// Add event listener to the Predict Winner button
+document.querySelector('.btn.btn-primary').addEventListener('click', predict_winner);
+
+
+
+function post_prediction(p1_pokemon, p2_pokemon, prediction){
+  
+  const image_url = `static\\images\\${prediction.toLowerCase()}.png`;
+
+  
+  // html output
+  d3.select("#predicted_winner").html(`
+  <pclass="predict_player">${p1_pokemon}</p> 
+  <pclass="predict_vs">vs</p>
+  <p class="predict_player">${p2_pokemon}</p>
+
+  <img class="hero_image" src=${image_url} />
+
+  <h3>Predicted Winner:</h3>
+  <h4>${prediction}</h4>
+
+`);
+}
+
+
+
+// ###################################################################################
 
 // Call the function to fetch and populate the dropdown when the page loads
 document.addEventListener('DOMContentLoaded', load_pokemon);

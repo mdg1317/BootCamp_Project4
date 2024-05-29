@@ -18,8 +18,11 @@
 <body>
   <div class="container-fluid" id="main_container">
     <div class="row" id="header">
-      <div class="col-12">
-        <p>header</p>
+      <div class="col-4"><img class="main_logo" src="../../static/images/logo.png" /></div>
+      <div class="col-4"></div>
+      <div class="col-4 project_info">
+        <p><strong>Info:</strong></p>
+        <p>This is a class project demonstrating machine learning and predictive modeling.  More information can be found on <a href="https://github.com/mdg1317/BootCamp_Project4">GitHub</a>.</p>
       </div>
     </div>
     <div class="row" id="body">
@@ -27,7 +30,7 @@
       <!-- Player 1 Column -->
       <div class="col-md-4 challenger_container">
         <div class="row pulldown_container">
-          <h6>Player 1 Pokemon:</h6>
+          <h2>Player 1 Pokemon:</h2>
           <select id="pokemon1_dropdown" class="pulldown"></select>
         </div>
 
@@ -45,17 +48,16 @@
 
       <!-- Center Column -->
       <div class="col-md-4 battle_container">
-        <div class="row" id = "pokemon_lineup">
-          top
-        </div>
-
+        <div class="row" id="pokemon_lineup"></div>
+        
         <div class="row" id="fight_button">
-          <button class="btn btn-primary" type="submit">Predict Winner</button>
+          <button class="btn btn-primary" type="submit">Predict The Winner</button>
         </div>
 
         <div class="row">
           <div class="col-md-12" id="predicted_winner">
-            Winner
+            <div class="row" id="predicted_result"></div>
+
           </div>
         </div>
       </div>
@@ -63,7 +65,7 @@
       <!-- Player 2 Column -->
       <div class="col-md-4 challenger_container">
         <div class="row pulldown_container">
-          <h6>Player 2 Pokemon:</h6>
+          <h2>Player 2 Pokemon:</h2>
           <select id="pokemon2_dropdown" class="pulldown"></select>
         </div>
 

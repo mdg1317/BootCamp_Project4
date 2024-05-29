@@ -1,6 +1,8 @@
 /* Remove the default margin and padding from the body. */
 body {
-    background:  rgb(255, 255, 255);
+    background:  rgb(255, 255, 227);
+    /* background-image: url("https://lh3.googleusercontent.com/4I4XB51OZpQL-JuSUcd8yrchFvAXJrK405d6CtVX9hXOqAC4vFTeuwFACbVzPSCOEeRtMHlLqA33rvlcnGb3FPTSfOuusljfWH9sf1U45Aaq=rw-e365-w1800"); */
+    font-family: "PT Sans", -apple-system, BlinkMacSystemFont, HelveticaNeue-Light, "Segoe UI", "Helvetica Neue", Helvetica, Raleway, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", -apple-system, BlinkMacSystemFont, HelveticaNeue-Light, "Segoe UI", "Helvetica Neue", Helvetica, Raleway, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   }
 
   /* Basic Layout */
@@ -14,25 +16,59 @@ body {
 }
 
 #header {
-    background-color: rgb(229, 255, 0);
+    background-color:#ffe419;
     height:  100px;
+    background-image: url("../../static/images/halftone_bg.png");
+    background-size: 300px;
+    background-repeat: no-repeat;
     /* border: 1px solid blue; */
     margin-bottom: 10px;
     border-radius: 40px 40px 0px 0px;
 }
 
+
+
   .challenger_container {
-    background-color: rgb(229, 255, 0);
-    border-radius: 00px 0px 40px 40px;
+    background-color: #ffe419;
+    border: 2px solid #adadad;
+    border-radius: 40px 40px 40px 40px;
+    background-image: url("../../static/images/body_bg.png");
+    padding: 20px;
 }
 
+/* Header Elements */
+.main_logo {
+    margin: 5px 0px 5px 50px;
+    height: 85px;
+}
+
+.project_info {
+    padding: 45px 35px 0px 35px;
+    font-size: .65rem;
+    color: rgb(88, 88, 88);
+    /* display: flex;
+    align-items: end; */
+}
+
+.project_info p {
+    padding: 0px;
+    margin: 0px;
+}
+
+.project_info a {
+    color: rgb(88, 88, 88);
+
+}
 
 /* Hero Column */
 
 /* Character Selection Pulldown */
+.challenger_container h2 {
+    font-size: 1.8em;
+}
+
 .pulldown_container {
     height: 50px;
-
 }
 
 .pulldown {
@@ -43,7 +79,7 @@ body {
 
 /* Hero Image */
 .hero_container {
-    height: 250px;
+    height: 250px;    
 }
 
 .hero_image {
@@ -56,13 +92,14 @@ body {
 
 /* Hero Stats */
 .hero_stats_container {
-    height: 450px;
+    /* height: 350px; */
 }
 
 .pokemon_stats {
     background: white;
     width: 75%;
     margin: 15px auto;
+    border: 2px solid #adadad;
     border-radius: 20px;
     padding: 10px;
 }
@@ -98,27 +135,100 @@ body {
 
 /* Battle Area - Center Column */
 .battle_container {
-    background: white;
 }
+
+#pokemon_lineup {
+    /* background-image: url("../../static/images/halftone_bg.png");
+    background-size: 100%; */
+    background-color: #ccebf6;
+    border: 3px dotted #009dd1;
+    width: 75%;
+    border-radius: 100%;
+    margin: 30px auto;
+}
+
+.predict_player {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    /* color: red; */
+    
+    font-size: 2rem;
+    font-weight: 500;
+    font-variant: small-caps;
+    color: white;
+    text-shadow: 2px 2px 4px #000000;
+
+}
+
+.predict_vs {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    color: #009dd1;
+    font-size: 1.7rem;
+    font-weight: 700;
+}
+
 
 /* Battle Button  */
 #fight_button {
-    width: 75%;
+    width: 60%;
     margin: 15px auto;
+}
+
+.btn {
+    background-color: #009dd1;
+    border: 1px solid #0091c2;
+    border-radius: 8px;
+    font-size: 1.25rem;
+}
+
+.btn:hover {
+    background-color: #0091c2;
+    border: 1px solid #009dd1;
 }
 
 /* Predicted Winner  */
-#predicted_winner {
-    border: 1px solid red;
-    background: rgb(160, 115, 115);
+
+.placeholder_img {
+    margin: 20px 0px 50px 0px;
+}
+#predicted_winner {    
+    border: 2px dashed #38a838;
+    background: #d7eed7;
+    /* background-image: url("../../static/images/halftone_bg.png");
+    background-size: 100%; */
     width: 75%;
     margin: 15px auto;
     border-radius: 20px;
-    padding: 10px;
-    height: 450px;
+    padding: 15px 25px;
+    filter: drop-shadow(5px 5px 6px rgba(0, 0, 0, 0.4));
+    /* display: flex;
+    justify-content: center; */
 
 }
 
 
+.predicted_result_title, .prediction_result {
+    margin: auto;
+    padding: 0;
+    width: auto;
+}
+
+.predicted_result_title {
+    color: #38a838;
+    margin-bottom: 10px;
+}
 
 
+.prediction_result {
+    font-size: 2.5rem;
+    font-weight: 600;
+    font-variant: small-caps;
+    color: white;
+    text-shadow: 2px 2px 4px #000000;
+
+    
+    
+}

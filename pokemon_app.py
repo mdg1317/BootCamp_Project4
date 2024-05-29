@@ -29,7 +29,7 @@ def process_battle(p1_pokemon, p2_pokemon):
 
 
 
-    battle_prediction = "booger"  # change this to return the name of the pokemon winner
+    battle_prediction = "Abomasnow"  #change this to return the name of the pokemon winner
     return battle_prediction
 
 if __name__ == '__main__':

@@ -1,5 +1,5 @@
 # Pokémon Battle Predictor
-*Group Project - Machine Learning and Predictive Modeling - Week 24 - Data Analytics Boot Camp - University of Oregon*
+*Machine Learning and Predictive Modeling*
 
 ![Pokémon Battle Predictor](static/images/logo.png)
 
@@ -17,4 +17,6 @@ Quick introduction
 ## Approach
 
 
-## Resources
+## Attribution
+- Dataset
+

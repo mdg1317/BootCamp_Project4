@@ -15,7 +15,8 @@ CREATE TABLE pokemon (
   sp_def INT,
   speed INT,
   generation INT,
-  legendary BOOLEAN
+  mythical INT,
+  legendary INT
 );
 
 -- Verify successful data import
@@ -53,6 +54,7 @@ SELECT c.match_id,
   p.sp_def AS first_sp_def,
   p.speed AS first_speed,
   p.generation AS first_generation,
+  p.mythical AS first_mythical,
   p.legendary AS first_legendary,
   c.second_pokemon AS second,
   p2.name AS second_name,
@@ -65,6 +67,7 @@ SELECT c.match_id,
   p2.sp_def AS second_sp_def,
   p2.speed AS second_speed,
   p2.generation AS second_generation,
+  p2.mythical AS second_mythical,
   p2.legendary AS second_legendary,
   c.winner
 INTO pokemon_combats

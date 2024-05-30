@@ -19,4 +19,4 @@ Quick introduction
 
 ## Attribution
 - [Pokemon Dataset with Team Combat](https://www.kaggle.com/datasets/tuannguyenvananh/pokemon-dataset-with-team-combat)
-- Pokémon images sourced from [The Pokémon Company](https://www.pokemon.com/us).  Used for educational purposes only.
+- Pokémon names and images sourced from [The Pokémon Company](https://www.pokemon.com/us).  Used for educational purposes only.

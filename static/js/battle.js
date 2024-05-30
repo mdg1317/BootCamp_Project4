@@ -71,20 +71,11 @@ function update_pokemon1_stats(selected_name) {
   ? `static\\images\\${selected_pokemon["Type 2"].toLowerCase()}.png`
   : "static\\images\\none.png";
 
-  console.log(type1);
-  console.log(type2);
-
-
-  
-
-
-
   d3.select("#p1_stats").html(`
     <h4>${selected_pokemon["Name"]} </h4>
-    <h5 class="legendary_label">${is_legendary ? "(Legendary)" : ""}</h5>    
-    <ul>
-      <li><strong>Type 1:</strong>           <img class="type_label" src=${type1} title="${selected_pokemon["Type 1"]}"></li>
-      <li><strong>Type 2:</strong>           <img class="type_label" src=${type2} title="${selected_pokemon["Type 2"]}"></li>
+    <h5 class="legendary_label">${is_legendary ? "(Legendary)" : ""}</h5>
+    <img class="type_label" src=${type1} title="${selected_pokemon["Type 1"]}"> <img class="type_label" src=${type2} title="${selected_pokemon["Type 2"]}">    
+    <ul>    
       <li><strong>HP:</strong>               ${selected_pokemon["HP"]}</li>
       <li><strong>Attack:</strong>           ${selected_pokemon["Attack"]}</li>
       <li><strong>Special Attack:</strong>   ${selected_pokemon["Sp. Atk"]}</li>
@@ -114,10 +105,9 @@ function update_pokemon2_stats(selected_name) {
 
   d3.select("#p2_stats").html(`
     <h4>${selected_pokemon["Name"]} </h4>
-    <h5 class="legendary_label">${is_legendary ? "(Legendary)" : ""}</h5>    
-    <ul>
-    <li><strong>Type 1:</strong>           <img class="type_label" src=${type1} title="${selected_pokemon["Type 1"]}"></li>
-    <li><strong>Type 2:</strong>           <img class="type_label" src=${type2} title="${selected_pokemon["Type 2"]}"></li>
+    <h5 class="legendary_label">${is_legendary ? "(Legendary)" : ""}</h5>
+    <img class="type_label" src=${type1} title="${selected_pokemon["Type 1"]}"> <img class="type_label" src=${type2} title="${selected_pokemon["Type 2"]}">   
+    <ul>    
       <li><strong>HP:</strong>               ${selected_pokemon["HP"]}</li>
       <li><strong>Attack:</strong>           ${selected_pokemon["Attack"]}</li>
       <li><strong>Special Attack:</strong>   ${selected_pokemon["Sp. Atk"]}</li>

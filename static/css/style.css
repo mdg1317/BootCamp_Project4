@@ -128,6 +128,10 @@ body {
 .pokemon_stats li strong {    
 }
 
+.type_label {
+    height: 25px;
+}
+
 
 
 /* Battle Area - Center Column */

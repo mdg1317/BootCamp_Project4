@@ -57,19 +57,34 @@ function populate_dropdown(pokemon_names, dropdown_id, change_handler) {
 // Updates Pokemon 1 stats card
 function update_pokemon1_stats(selected_name) {
   const selected_pokemon = pokemon_data.find(pokemon => pokemon.Name === selected_name);
+
   // console.log('Pokemon 1:', selected_pokemon);
   update_pokemon_image(selected_name, "p1_hero_image")
+
   // Updates p1 vs p2 in center column
   update_p1_v_p2()
 
   const is_legendary = selected_pokemon["Legendary"] === "True";
 
+  const type1 = `static\\images\\${selected_pokemon["Type 1"].toLowerCase()}.png`;
+  const type2 = selected_pokemon["Type 2"]
+  ? `static\\images\\${selected_pokemon["Type 2"].toLowerCase()}.png`
+  : "static\\images\\none.png";
+
+  console.log(type1);
+  console.log(type2);
+
+
+  
+
+
+
   d3.select("#p1_stats").html(`
     <h4>${selected_pokemon["Name"]} </h4>
     <h5 class="legendary_label">${is_legendary ? "(Legendary)" : ""}</h5>    
     <ul>
-      <li><strong>Type 1:</strong>           ${selected_pokemon["Type 1"]}</li>
-      <li><strong>Type 2:</strong>           ${selected_pokemon["Type 2"]}</li>
+      <li><strong>Type 1:</strong>           <img class="type_label" src=${type1} title="${selected_pokemon["Type 1"]}"></li>
+      <li><strong>Type 2:</strong>           <img class="type_label" src=${type2} title="${selected_pokemon["Type 2"]}"></li>
       <li><strong>HP:</strong>               ${selected_pokemon["HP"]}</li>
       <li><strong>Attack:</strong>           ${selected_pokemon["Attack"]}</li>
       <li><strong>Special Attack:</strong>   ${selected_pokemon["Sp. Atk"]}</li>
@@ -92,12 +107,17 @@ function update_pokemon2_stats(selected_name) {
 
   const is_legendary = selected_pokemon["Legendary"] === "True";
 
+  const type1 = `static\\images\\${selected_pokemon["Type 1"].toLowerCase()}.png`;
+  const type2 = selected_pokemon["Type 2"]
+  ? `static\\images\\${selected_pokemon["Type 2"].toLowerCase()}.png`
+  : "static\\images\\none.png";
+
   d3.select("#p2_stats").html(`
     <h4>${selected_pokemon["Name"]} </h4>
     <h5 class="legendary_label">${is_legendary ? "(Legendary)" : ""}</h5>    
     <ul>
-      <li><strong>Type 1:</strong>           ${selected_pokemon["Type 1"]}</li>
-      <li><strong>Type 2:</strong>           ${selected_pokemon["Type 2"]}</li>
+    <li><strong>Type 1:</strong>           <img class="type_label" src=${type1} title="${selected_pokemon["Type 1"]}"></li>
+    <li><strong>Type 2:</strong>           <img class="type_label" src=${type2} title="${selected_pokemon["Type 2"]}"></li>
       <li><strong>HP:</strong>               ${selected_pokemon["HP"]}</li>
       <li><strong>Attack:</strong>           ${selected_pokemon["Attack"]}</li>
       <li><strong>Special Attack:</strong>   ${selected_pokemon["Sp. Atk"]}</li>

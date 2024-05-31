@@ -176,7 +176,6 @@ document.querySelector('.btn.btn-primary').addEventListener('click', predict_win
 
 // Posts prediction based on what is returned by python/flask
 function post_prediction(prediction){
-  console.log(prediction)  
   const image_url = `static\\images\\${prediction.toLowerCase()}.png`;
   
   // html outputs

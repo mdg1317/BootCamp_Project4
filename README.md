@@ -38,7 +38,7 @@ Whenever any of the selections change, the Battle Predictor is reset for the nex
 - Javascript
 - Web Scraping (Beautiful Soup & Splinter)
 
-# How To Use This Project
+# How To Use The Pokémon Battle Predictor
 1. Download this Github repository and unzip it into a local folder.
 2. Unzip 'final_rf_model.zip' - This is the random forest model used for predicting outcomes.
 3. Run 'pokemon_app.py' - This will launch the Flask server environment.

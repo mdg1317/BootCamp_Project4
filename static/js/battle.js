@@ -1,33 +1,73 @@
 // console.log("connected");
 
 // File Paths & variables
-const pokemon_csv = "static/data/pokemon.csv";
+let pokemon_csv = "static/data/pokemon_etl.csv";
 let pokemon_data = [];
+let pokemon_names = [];
+let selected_name = "";
+let index_p1 = 0;
+let index_p2 = 0;
 
-
+// Get the necessary elements
+const dropdown_p1 = d3.select('#pokemon1_dropdown');
+const dropdown_p2 = d3.select('#pokemon2_dropdown');
+const previous_p1 = d3.select("#previous_p1");
+const previous_p2 = d3.select("#previous_p2");
+const next_p1 = d3.select("#next_p1");
+const next_p2 = d3.select("#next_p2");
 
 // Parse the CSV
 function load_pokemon() {
   d3.csv(pokemon_csv).then(data => {
     pokemon_data = data;
-    let pokemon_names = data.map(row => row.Name);
-    populate_dropdown(pokemon_names, '#pokemon1_dropdown', update_pokemon1_stats);
-    populate_dropdown(pokemon_names, '#pokemon2_dropdown', update_pokemon2_stats);
+
+    // Sort the names alphabetically and add them to dropdowns
+    pokemon_names = data.map(row => row.Name).sort();
+    populate_dropdowns(pokemon_names);
+
+    // Change the displayed Pokemon when the dropdown value changes
+    dropdown_p1.on('change', function() {
+      selected_name = dropdown_p1.property('value');
+      index_p1 = dropdown_p1.property("selectedIndex");
+      update_pokemon1_stats(selected_name);
+    });
+    dropdown_p2.on('change', function() {
+      selected_name = dropdown_p2.property('value');
+      index_p2 = dropdown_p2.property("selectedIndex");
+      update_pokemon2_stats(selected_name);
+    });
+
+    // Go to the next/previous Pokemon when the appropriate buttons are clicked
+    previous_p1.on("click", function() {
+      change_pokemon(previous_p1, index_p1, dropdown_p1);
+    });
+
+    next_p1.on("click", function() {
+      change_pokemon(next_p1, index_p1, dropdown_p1);
+    });
+
+    previous_p2.on("click", function() {
+      change_pokemon(previous_p2, index_p2, dropdown_p2);
+    });
+
+    next_p2.on("click", function() {
+      change_pokemon(next_p2, index_p2, dropdown_p2);
+    });
+    
   }).catch(error => console.error('Error fetching the CSV file:', error));
 }
 
-
-
 // Populate dropdowns
-function populate_dropdown(pokemon_names, dropdown_id, change_handler) {
-  // Sort the names alphabetically 
-  pokemon_names.sort();
+function populate_dropdowns(pokemon_names) {
+  // Appends the names to the dropdowns
+  dropdown_p1.selectAll('option')
+    .data(pokemon_names)
+    .enter()
+    .append('option')
+    .text(d => d)
+    .attr('value', d => d);
 
-  // Selects the dropdown element
-  const dropdown = d3.select(dropdown_id);
-
-  // Appends the name to the dropdown
-  dropdown.selectAll('option')
+  dropdown_p2.selectAll('option')
     .data(pokemon_names)
     .enter()
     .append('option')
@@ -36,35 +76,66 @@ function populate_dropdown(pokemon_names, dropdown_id, change_handler) {
 
   // Set the first option as selected
   if (pokemon_names.length > 0) {
-    dropdown.property('selectedIndex', 0);
+    dropdown_p1.property('selectedIndex', 0);
+    dropdown_p2.property('selectedIndex', 0);
   }
 
-  // Add event listener for dropdown change
-  dropdown.on('change', function() {
-    const selected_name = dropdown.property('value');
-    change_handler(selected_name);
-  });
-
-  // Log data for the first option initially
-  change_handler(pokemon_names[0]);
-
-  // Updates p1 vs p2 in center column
+  // Update all columns
+  update_pokemon1_stats(pokemon_names[0]);
+  update_pokemon2_stats(pokemon_names[0]);
   update_p1_v_p2()
 }
 
+function change_pokemon(button, index, dropdown){
+  // Appropriately set the index based on which button pressed
+  if (button == previous_p1 || button == previous_p2) {
+    if ((index - 1) < 0) {
+      index = pokemon_names.length - 1;
+    } else {
+      index--;
+    }
+    if (button == previous_p1) {
+      index_p1 = index;
+    } else {
+      index_p2 = index;
+    }
+  } else {
+    if ((index + 1) == pokemon_names.length) {
+      index = 0;
+    } else {
+      index++;
+    }
+    if (button == next_p1) {
+      index_p1 = index;
+    } else {
+      index_p2 = index;
+    }
+  }
+  
+  // Set the dropdown value
+  selected_name = pokemon_names[index];
+  dropdown.property("value", selected_name);
+
+  // Update the appropriate column
+  if (button == previous_p1 || button == next_p1) {
+    update_pokemon1_stats(selected_name);
+  } else {
+    update_pokemon2_stats(selected_name);
+  }
+}
 
 
 // Updates Pokemon 1 stats card
 function update_pokemon1_stats(selected_name) {
   const selected_pokemon = pokemon_data.find(pokemon => pokemon.Name === selected_name);
 
-  // console.log('Pokemon 1:', selected_pokemon);
   update_pokemon_image(selected_name, "p1_hero_image")
 
   // Updates p1 vs p2 in center column
   update_p1_v_p2()
 
-  const is_legendary = selected_pokemon["Legendary"] === "True";
+  const is_legendary = selected_pokemon["Legendary"] == 1;
+  const is_mythical = selected_pokemon["Mythical"] == 1;
 
   const type1 = `static\\images\\${selected_pokemon["Type 1"].toLowerCase()}.png`;
   const type2 = selected_pokemon["Type 2"]
@@ -73,15 +144,15 @@ function update_pokemon1_stats(selected_name) {
 
   d3.select("#p1_stats").html(`
     <h4>${selected_pokemon["Name"]} </h4>
-    <h5 class="legendary_label">${is_legendary ? "(Legendary)" : ""}</h5>
+    <h5 class="legendary_label">${is_legendary ? "(Legendary)" : "" || is_mythical ? "(Mythical)" : "" }</h5>
     <img class="type_label" src=${type1} title="${selected_pokemon["Type 1"]}"> <img class="type_label" src=${type2} title="${selected_pokemon["Type 2"]}">    
     <ul>    
       <li><strong>HP:</strong>               ${selected_pokemon["HP"]}</li>
       <li><strong>Attack:</strong>           ${selected_pokemon["Attack"]}</li>
-      <li><strong>Special Attack:</strong>   ${selected_pokemon["Sp. Atk"]}</li>
-      <li><strong>Special Defense:</strong>  ${selected_pokemon["Sp. Def"]}</li>
+      <li><strong>Defense:</strong>           ${selected_pokemon["Defense"]}</li>
+      <li><strong>Sp. Attack:</strong>   ${selected_pokemon["Sp. Atk"]}</li>
+      <li><strong>Sp. Defense:</strong>  ${selected_pokemon["Sp. Def"]}</li>
       <li><strong>Speed:</strong>            ${selected_pokemon["Speed"]}</li>
-      <li><strong>Generation:</strong>       ${selected_pokemon["Generation"]}</li>
     </ul>  
   `);
 }
@@ -96,8 +167,9 @@ function update_pokemon2_stats(selected_name) {
   // Updates p1 vs p2 in center column
   update_p1_v_p2()
 
-  const is_legendary = selected_pokemon["Legendary"] === "True";
-
+  const is_legendary = selected_pokemon["Legendary"] == 1;
+  const is_mythical = selected_pokemon["Mythical"] == 1;
+  
   const type1 = `static\\images\\${selected_pokemon["Type 1"].toLowerCase()}.png`;
   const type2 = selected_pokemon["Type 2"]
   ? `static\\images\\${selected_pokemon["Type 2"].toLowerCase()}.png`
@@ -105,15 +177,15 @@ function update_pokemon2_stats(selected_name) {
 
   d3.select("#p2_stats").html(`
     <h4>${selected_pokemon["Name"]} </h4>
-    <h5 class="legendary_label">${is_legendary ? "(Legendary)" : ""}</h5>
+    <h5 class="legendary_label">${is_legendary ? "(Legendary)" : "" || is_mythical ? "(Mythical)" : "" }</h5>
     <img class="type_label" src=${type1} title="${selected_pokemon["Type 1"]}"> <img class="type_label" src=${type2} title="${selected_pokemon["Type 2"]}">   
     <ul>    
       <li><strong>HP:</strong>               ${selected_pokemon["HP"]}</li>
       <li><strong>Attack:</strong>           ${selected_pokemon["Attack"]}</li>
-      <li><strong>Special Attack:</strong>   ${selected_pokemon["Sp. Atk"]}</li>
-      <li><strong>Special Defense:</strong>  ${selected_pokemon["Sp. Def"]}</li>
+      <li><strong>Defense:</strong>           ${selected_pokemon["Defense"]}</li>
+      <li><strong>Sp. Attack:</strong>   ${selected_pokemon["Sp. Atk"]}</li>
+      <li><strong>Sp. Defense:</strong>  ${selected_pokemon["Sp. Def"]}</li>
       <li><strong>Speed:</strong>            ${selected_pokemon["Speed"]}</li>
-      <li><strong>Generation:</strong>       ${selected_pokemon["Generation"]}</li>
     </ul>  
   `);
 }
@@ -121,7 +193,7 @@ function update_pokemon2_stats(selected_name) {
 
 // Updates the selected Pokémon picture
 function update_pokemon_image(selected_name, container_id) {
-  const image_url = `static\\images\\${selected_name.toLowerCase()}.png`;
+  const image_url = `static\\images\\${selected_name.replace(" ", "_").replace(".", "").toLowerCase()}.png`;
   const hero = document.getElementById(container_id)
   hero.src = image_url
 };

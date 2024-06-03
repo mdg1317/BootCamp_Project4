@@ -71,7 +71,18 @@ body {
 
 .pulldown {
     width: 75%;
-    margin-left: 20px;
+}
+
+.horizontal_row {
+    display: flex;
+}
+
+.btn_dropdown {
+    background-color: #ffffff;
+    border: 1px solid #000000;
+    border-radius: 8px;
+    font-size: 1.25rem;
+    margin: auto;
 }
 
 
@@ -105,7 +116,6 @@ body {
     font-size: 1.8rem;
     font-variant: small-caps;
     margin-bottom: 0px;
-
 }
 
 .legendary_label {

@@ -21,7 +21,7 @@ For our classification models, we decided to focus on two types that work well f
 ### User Interface
 To create a user interface, we chose to use Flask to run a server environment.  This will allow us to pass data between a web page and Python allowing us to utilize our machine learning model.
 
-The web page was built with HTML, CSS, and JavaScript, with the Bootstrap framework providing the layout structure.  JavaScript to reads the Pokemon names from a CSV to populate the dropdown selectors and dynamically updates each Pokémon's image and stats. 
+The web page was built with HTML, CSS, and JavaScript, with the Bootstrap framework providing the layout structure.  JavaScript to reads the Pokémon names from a CSV to populate the dropdown selectors and dynamically updates each Pokémon's image and stats. 
 
 When the "Predict The Winner" button is clicked, JavaScript sends a query to the Flask app, submitting the selected Pokémon names for Player 1 and Player 2. The Flask app receives the names, retrieves each Pokémon’s stats, and formats the data to match the formating used during model training. It then creates a single-row DataFrame, which is fed to the model to predict the outcome. A result of 0 indicates that Player 1 is predicted to win, whereas a result of 1 indicates that Player 2 is predicted to win. These results are sent back to JavaScript, which then displays the winner’s name and image in the center column.
 
@@ -45,6 +45,6 @@ Whenever any of the selections change, the Battle Predictor is reset for the nex
 4. In a browser, go to: http://127.0.0.1:5000/ to run the Pokémon Battle Predictor web page.
 
 ## Attribution
-- [Pokemon Dataset with Team Combat](https://www.kaggle.com/datasets/tuannguyenvananh/pokemon-dataset-with-team-combat)
+- [Pokémon Dataset with Team Combat](https://www.kaggle.com/datasets/tuannguyenvananh/pokemon-dataset-with-team-combat)
 - Pokémon names and images sourced from [The Pokémon Company](https://www.pokemon.com/us).  Used for educational purposes only.
 - Optimization code and instruction. [Towards Data Science: Hyperparameter Tuning the Random Forest in Python](https://towardsdatascience.com/hyperparameter-tuning-the-random-forest-in-python-using-scikit-learn-28d2aa77dd74)

@@ -6,14 +6,16 @@ from model import X_scaler
 
 app = Flask(__name__)
 
-loaded_model = joblib.load("random_forest.joblib")
-pokemon_df = pd.read_csv("Resources/pokemon_etl.csv")
+loaded_model = joblib.load("final_rf_model.joblib")
+pokemon_df = pd.read_csv("static/data/pokemon_etl.csv")
 pokemon_df.fillna("None", inplace=True)
+
 
 # Launches website index.html
 @app.route('/')
 def index():
     return render_template('index.html')
+
 
 # App/path for predicting the winner
 @app.route('/predict_winner', methods=['POST'])
@@ -28,33 +30,23 @@ def predict_winner():
     return jsonify({'result': winner})  # Return the result as JSON back to battle.js
 
 
-
-
 # Uses model to predict the winner
 def process_battle(p1_pokemon, p2_pokemon): 
-    print(f"{p1_pokemon} vs {p2_pokemon}")
-
+    # Get stats of selected Pokemon
     p1_stats = pokemon_df.loc[pokemon_df["Name"] == p1_pokemon]
     p2_stats = pokemon_df.loc[pokemon_df["Name"] == p2_pokemon]
-
-    print(pokemon_df)
-
-    #print(p1_stats["Type 1"].values[0])
-    #print(p1_stats["Type 2"].values[0])
-
-    effectiveness = get_type_effectiveness(p1_stats["Type 1"].values[0], p1_stats["Type 2"].values[0], p2_stats["Type 1"].values[0], p2_stats["Type 2"].values[0])
-
-    X_test = pd.DataFrame(data={"first_effectiveness": effectiveness[0], "first_hp": p1_stats["HP"].values, "first_attack": p1_stats["Attack"].values, "first_defense": p1_stats["Defense"].values,
-                                        "first_sp_atk": p1_stats["Sp. Atk"].values, "first_sp_def": p1_stats["Sp. Def"].values, "first_speed": p1_stats["Speed"].values, "first_mythical": p1_stats["Mythical"].values,
-                                        "first_legendary": p1_stats["Legendary"].values, "second_effectiveness": effectiveness[1], "second_hp": p2_stats["HP"].values, "second_attack": p2_stats["Attack"].values,
-                                        "second_defense": p2_stats["Defense"].values, "second_sp_atk": p2_stats["Sp. Atk"].values, "second_sp_def": p2_stats["Sp. Def"].values, "second_speed": p2_stats["Speed"].values,
-                                        "second_mythical": p2_stats["Mythical"].values, "second_legendary": p2_stats["Legendary"].values})
     
+    # Put data into one-row DataFrame formatted as necessary
+    X_test = pd.DataFrame(data={"first_hp": p1_stats["HP"].values, "first_attack": p1_stats["Attack"].values,
+                                    "first_sp_atk": p1_stats["Sp. Atk"].values, "first_sp_def": p1_stats["Sp. Def"].values, "first_speed": p1_stats["Speed"].values,
+                                    "second_hp": p2_stats["HP"].values, "second_attack": p2_stats["Attack"].values,
+                                    "second_sp_atk": p2_stats["Sp. Atk"].values, "second_speed": p2_stats["Speed"].values})
+    
+    # Scale the data and make prediction
     X_test_scaled = X_scaler.transform(X_test)
-    
     prediction = loaded_model.predict(X_test_scaled)[0]
-    print(prediction)
 
+    # Return name of winner
     if prediction == 0:
         battle_prediction = p1_stats["Name"].values[0]
     else:
@@ -89,8 +81,6 @@ def get_type_effectiveness(first_type_1, first_type_2, second_type_1, second_typ
     first_effectiveness = 0.0
     second_effectiveness = 0.0
 
-    print(first_type_1)
-
     # For each matchup, get each Pokemon types and sum their effectiveness
     # The higher the number, the more "effective" that Pokemon is against its opponent
     if first_type_2 == "None":
@@ -102,9 +92,6 @@ def get_type_effectiveness(first_type_1, first_type_2, second_type_1, second_typ
         second_types = [second_type_1]
     else:
         second_types = [second_type_1, second_type_2]
-
-    print(first_types)
-    print(second_types)
 
     for first_type in first_types:
         for second_type in second_types:

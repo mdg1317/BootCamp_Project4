@@ -7,7 +7,7 @@ from model import X_scaler
 app = Flask(__name__)
 
 loaded_model = joblib.load("final_rf_model.joblib")
-pokemon_df = pd.read_csv("Resources/pokemon_etl.csv")
+pokemon_df = pd.read_csv("static/data/pokemon_etl.csv")
 pokemon_df.fillna("None", inplace=True)
 
 
@@ -35,12 +35,6 @@ def process_battle(p1_pokemon, p2_pokemon):
     # Get stats of selected Pokemon
     p1_stats = pokemon_df.loc[pokemon_df["Name"] == p1_pokemon]
     p2_stats = pokemon_df.loc[pokemon_df["Name"] == p2_pokemon]
-
-    """X_test = pd.DataFrame(data={"first_effectiveness": effectiveness[0], "first_hp": p1_stats["HP"].values, "first_attack": p1_stats["Attack"].values, "first_defense": p1_stats["Defense"].values,
-                                        "first_sp_atk": p1_stats["Sp. Atk"].values, "first_sp_def": p1_stats["Sp. Def"].values, "first_speed": p1_stats["Speed"].values, "first_mythical": p1_stats["Mythical"].values,
-                                        "first_legendary": p1_stats["Legendary"].values, "second_effectiveness": effectiveness[1], "second_hp": p2_stats["HP"].values, "second_attack": p2_stats["Attack"].values,
-                                        "second_defense": p2_stats["Defense"].values, "second_sp_atk": p2_stats["Sp. Atk"].values, "second_sp_def": p2_stats["Sp. Def"].values, "second_speed": p2_stats["Speed"].values,
-                                        "second_mythical": p2_stats["Mythical"].values, "second_legendary": p2_stats["Legendary"].values})"""
     
     # Put data into one-row DataFrame formatted as necessary
     X_test = pd.DataFrame(data={"first_hp": p1_stats["HP"].values, "first_attack": p1_stats["Attack"].values,
